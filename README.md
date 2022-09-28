@@ -44,7 +44,7 @@ For each milestone, you will also need to write a report and upload it to canvas
 | Create a CPU convolution implementation |
 | Profile your implementation with `gprof` |
 | Complete your report on Canvas: https://canvas.illinois.edu/courses/30068/quizzes/250868|
-| Use `rai -p <project folder> --queue rai_amd64_ece408 --submit=m1` to mark your job for grading |
+| Use `rai -p <project folder> --submit=m1` to mark your job for grading |
 
 Clone this repository to get the project folder.
 
