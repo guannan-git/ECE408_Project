@@ -159,15 +159,15 @@ Note: Due to the limited capacity of our RAI servers, in order to ensure RAI job
 
 You will use `gprof` to profile the execution of your CPU forward convolution implementation.
 
-We compile and link your `cpu-new-forward.cc` with the `-pg` flag, which creates a `gmon.out` artifact containing profile information when the binary `m1` is executed.  To analyze this information in human readable form, modify `rai_build.yml` and add the line
+We compile and link your `cpu-new-forward.cc` with the `-pg` flag, which creates a `gmon.out` artifact containing profile information when the binary `m1` is executed.  To analyze this information in human readable form, modify `rai_build.yml` and modify the line to redirect `gprof` output as `outfile`.
  
-    - /bin/bash -c "gprof -Q m1 gmon.out"
+    - /bin/bash -c "./m1 1000 && gprof -Q m1 gmon.out > outfile"
 
-By default, `gprof` prints both a flat profile and a call graph (see "Interpreting gprof's Output" in the [GNU gprof Documentation](https://sourceware.org/binutils/docs/gprof/index.html)).  With the `-Q` flag, we only print the flat profile.  The information you need can be found near the beginning of `gprof`'s output, so you can pipe the output to `grep` (with your function's name) or `head`.
+By default, `gprof` prints both a flat profile and a call graph (see "Interpreting gprof's Output" in the [GNU gprof Documentation](https://sourceware.org/binutils/docs/gprof/index.html)).  With the `-Q` flag, we only print the flat profile.  The information you need can be found near the beginning of `gprof`'s output. You can download your build folder and process the output `outfile` with `grep` (with your function's name) or `head`. You can also open it with text editor if you want to examine the complete output.
 
 The provided `m1.cc` is identical to the one used by `--submit=m1`.
 
-| Report  |
+| Report Questions  |
 | ------------ |
 | Show output of rai running Mini-DNN on the CPU (CPU convolution implemented) for batch size of 1k images|
 | List Op Times (CPU convolution implemented) for batch size of 1k images|
@@ -176,7 +176,7 @@ The provided `m1.cc` is identical to the one used by `--submit=m1`.
 
 Use
 
-    rai -p <project folder> --queue rai_amd64_ece408 --submit=m1
+    rai -p <project folder> --submit=m1
 
 to mark your submission for grading. Make sure to also upload your report to Canvas (https://canvas.illinois.edu/courses/30068/quizzes/250868).  Make sure you include all items listed above for this milestone.
 
