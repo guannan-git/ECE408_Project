@@ -180,10 +180,20 @@ Use
 
 to mark your submission for grading. Make sure to also upload your report to Canvas (https://canvas.illinois.edu/courses/30068/quizzes/250868).  Make sure you include all items listed above for this milestone.
 
+## Appendix
+
 ### Skeleton Code Description
 `custom/cpu-new-forward.cc` and `custom/new-forward.cu` containes skeleton implementations for the CPU and GPU convolutions respectively. You can complete the project by modifying these two files only. `custom/cpu-new-forward.h` and `custom/gpu-new-forward.h` are the respective header files. You need not modify these files unless you need to declare your own functions.
 
 The code in `m1.cc`, `m2.cc`, `m3.cc` and `final.cc` are the top level files that are executed for each milestone. You should not be modifying these files.
+
+### Checking for Errors
+
+Within `custom/new-forward.cu`, you can use the predefined error handling code to catch CUDA errors or, you can define a macro/function similar to `wbCheck` used in WebGPU.
+
+To catch memory errors, prepend your command with `cuda-memcheck`
+
+    - /bin/bash -c "cuda-memcheck ./m3"
 
 ## License
 
