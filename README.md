@@ -173,7 +173,7 @@ Use
 
     rai -p <project folder> --submit=m1
 
-to mark your submission for grading. Make sure to also upload your report to Canvas (https://canvas.illinois.edu/courses/30068/quizzes/250868).  Make sure you include all items listed above for this milestone.
+to mark your submission for grading. Make sure to complete your report on Canvas (https://canvas.illinois.edu/courses/30068/quizzes/250868).  Make sure you include all items listed above for this milestone.
 
 ## Appendix
 
