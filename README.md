@@ -53,7 +53,6 @@ Use RAI to run a batch forward pass on some test data.
 
     rai -p <project-folder> 
 
-Note that the `<project-folder>` path should point to the root of this repository.
 
 This will upload your project directory to rai and move it to `/src`, where the execution specified in `rai_build.yml` will occur. 
 
