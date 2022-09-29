@@ -32,6 +32,7 @@ You will be working on this project individually. We will release the code for p
 * [Final Submission](#final-submission)
 * [Final Report](#final-report)
 * [Rubric](#rubric) -->
+* [Appendix](#appendix)
 
 ## Milestone 1: Rai Installation, CPU convolution, Profiling
 
