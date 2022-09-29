@@ -46,16 +46,12 @@ For each milestone, you will also need to write a report and upload it to canvas
 | Complete your report on Canvas: https://canvas.illinois.edu/courses/30068/quizzes/250868|
 | Use `rai -p <project folder> --submit=m1` to mark your job for grading |
 
-Clone this repository to get the project folder.
-
-    git clone https://github.com/jiangranwang/ECE408_Project.git
-
 ### Testing Rai
 Run the default Mini-DNN forward pass using rai without any CPU/GPU implementation.
 
 Use RAI to run a batch forward pass on some test data.
 
-    rai -p <project-folder> --queue rai_amd64_ece408
+    rai -p <project-folder> 
 
 Note that the `<project-folder>` path should point to the root of this repository.
 
