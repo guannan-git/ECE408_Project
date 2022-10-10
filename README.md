@@ -38,7 +38,7 @@ You will be working on this project individually. We will release the code for p
 
 ***Deadline: 8 PM, Oct. 14, 2022***
 
-For each milestone, you will also need to write a report and upload it to canvas. This report should contain all of the deliverables.
+For each milestone, you will also need to complete a report on Canvas. The table below contains all of the deliverables.
 
 | Deliverables |
 | ------------ |
