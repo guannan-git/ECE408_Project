@@ -192,13 +192,13 @@ to mark your submission for grading. Make sure to complete your report on Canvas
 
 Modify `custom/new-forward.cu` to create GPU implementation of the forward convolution. In your template, the host code is separated in 3 parts. `conv_forward_gpu_prolog` allocates memory and copies data from host to device. `conv_forward_gpu` computes kernel dimensions and invokes kernel. `conv_forward_gpu_epilog` copies output back to host and free the device memory. You should implement your kernel code from Lecture 12 in `conv_forward_kernel`.
 
-Modify `rai_build.yml` to run with batch_size=10k.
+Modify `rai_build.yml` to run with batch_size=10000 (default is 10000). Run
 
     - /bin/bash -c "./m2"
 
 to use your GPU implementation.
 When it is correct, it will show the same correctness as Milestone 1. 
-The sum of OP times should be approximately 170ms if you implement the basic kernel from Lecture 12 correctly. To quicken development time, `m2.cc` takes one optional argument: the dataset size. See [Specifying Batch Size](#specifying-batch-size).
+The sum of OP times on batch_size=10000 should be approximately 170ms if you implement the basic kernel from Lecture 12 correctly. You must have correct accuracies and total OP time less than 340ms to earn credits on the coding part. To quicken development time, `m2.cc` takes one optional argument: the dataset size. See [Specifying Batch Size](#specifying-batch-size).
 
 ### Use Nsight-Systems and Nsight-Compute for initial Performance Results
 
@@ -211,6 +211,11 @@ To submit profiling job on the exclusive queue, run:
     rai --queue rai_amd64_exclusive -p <project-folder> 
 
 **Please only use the exclusive queue for the profiling purpose. Use the default queue to test your code.**
+
+Since profiling takes a while, the exclusive queue may get backed up when the deadline approaches. So we encourage you to start early on this Milestone. You can query the number of pending jobs on the exclusive queue by the following command:
+
+    rai -p . --queue=rai_amd64_exclusive queued
+
 
 ***System level profiling using Nsight-Systems***
 
