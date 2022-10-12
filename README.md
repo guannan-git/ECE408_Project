@@ -192,24 +192,38 @@ to mark your submission for grading. Make sure to complete your report on Canvas
 
 Modify `custom/new-forward.cu` to create GPU implementation of the forward convolution. In your template, the host code is separated in 3 parts. `conv_forward_gpu_prolog` allocates memory and copies data from host to device. `conv_forward_gpu` computes kernel dimensions and invokes kernel. `conv_forward_gpu_epilog` copies output back to host and free the device memory. You should implement your kernel code from Lecture 12 in `conv_forward_kernel`.
 
-Modify `rai_build.yml` to run
+Modify `rai_build.yml` to run with batch_size=10k.
 
     - /bin/bash -c "./m2"
 
 to use your GPU implementation.
-When it is correct, it will show the same correctness as Milestone 1. To quicken development time, `m2.cc` takes one optional argument: the dataset size. See [Specifying Batch Size](#specifying-batch-size).
+When it is correct, it will show the same correctness as Milestone 1. 
+The sum of OP times should be approximately 170ms if you implement the basic kernel from Lecture 12 correctly. To quicken development time, `m2.cc` takes one optional argument: the dataset size. See [Specifying Batch Size](#specifying-batch-size).
 
 ### Use Nsight-Systems and Nsight-Compute for initial Performance Results
 
-**Before you do any profiling, make sure you do not have any memory errors by running `cuda-memcheck`. See [Checking for Errors](#checking-for-errors) on how to run this.**
+**Before you do any profiling, make sure your implementation achieves desired accuracy. Also make sure you do not have any memory errors by running `cuda-memcheck`. See [Checking for Errors](#checking-for-errors) on how to run this.**
+
+To ensure accurate profiling results,
+we have created an exclusive queue for you. 
+To submit profiling job on the exclusive queue, run:
+
+    rai --queue rai_amd64_exclusive -p <project-folder> 
+
+**Please only use the exclusive queue for the profiling purpose. Use the default queue to test your code.**
 
 ***System level profiling using Nsight-Systems***
 
 We will learn how to use `nsys` (Nsight Systems) to profile the execution at the application level.
 
-Once you've gotten the appropriate accuracy results, generate a profile using `nsys`. Make sure `rai_build.yml` is configured for a GPU run. Then, modify `rai_build.yml` to generate a profile instead of just executing the code.
+Once you've gotten the appropriate accuracy results, generate a profile using `nsys`. Make sure `rai_build.yml` is configured for a GPU run. 
+You have to remove `-DCMAKE_CXX_FLAGS=-pg` in cmake and make line of your `rai_build.yml`:
 
-    - nsys profile --stats=true ./m2
+    - /bin/bash -c "cmake /ece408/project/ && make -j8"
+
+Then, modify `rai_build.yml` to generate a profile instead of just executing the code.
+
+    - /bin/bash -c "nsys profile --stats=true ./m2"
 
 You should see something that looks like the following (but not identical):
 
@@ -276,7 +290,7 @@ The [Nsight Compute installation](#nsight-compute-installation) section describe
 | Include a list of all kernels that cumulatively consume more than 90% of the program time (listing from the top of your `nsys` results until the cumulative `Time` is greater than 90%) |
 | Include a list of all CUDA API calls that cumulatively consume more than 90% of the program time |
 | Include an explanation of the difference between kernels and API calls |
-| Screenshot of the GPU SOL utilization in Nsight-Compute GUI for your kernel profiling data (for the first kernel launch of the two kernels) |
+| Screenshot of the GPU SOL utilization in Nsight-Compute GUI for your kernel profiling data (for the first kernel launch of the two convolution kernels). On the upper right corner, you have a drop-down option "Save as image". The default selection is "Copy as image". Use this image as your screenshot.|
 
 Use
 
@@ -318,15 +332,18 @@ To catch memory errors, prepend your command with `cuda-memcheck`
 
 You can gather system level performance information using `nsys`.
 
-For detailed kernel level GPU profiling, use `nv-nsight-cu-cli` and view that information with `nv-nsight-cu`.
+For detailed kernel level GPU profiling, use `nv-nsight-cu-cli` and view that information with `nv-nsight-cu`. To enable profiling with these tools,
+you have to remove `-DCMAKE_CXX_FLAGS=-pg` in cmake and make line of your `rai_build.yml`:
+
+    - /bin/bash -c "cmake /ece408/project/ && make -j8"
 
 You can see some simple information like so (as we did in milestone 2):
 
-    nsys profile --stats=true <your command here>
+    - /bin/bash -c "nsys profile --stats=true <your command here>"
 
 You can additionally gather some detailed kernel level performance metrics.
 
-    nv-nsight-cu-cli --section '.*' -o analysis_file <your command here>
+    - /bin/bash -c "nv-nsight-cu-cli --section '.*' -o analysis_file <your command here>"
 
 This will generate `analysis_file.ncu-rep`.
 `--section '.*'` may significantly slow the run time since it is profiling all the metrics. You may wish to modify the command to run on smaller datasets during this profiling.
