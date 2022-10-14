@@ -190,15 +190,15 @@ to mark your submission for grading. Make sure to complete your report on Canvas
 
 ### Create a GPU Implementation
 
-Modify `custom/new-forward.cu` to create GPU implementation of the forward convolution. In your template, the host code is separated in 3 parts. `conv_forward_gpu_prolog` allocates memory and copies data from host to device. `conv_forward_gpu` computes kernel dimensions and invokes kernel. `conv_forward_gpu_epilog` copies output back to host and free the device memory. You should implement your kernel code from Lecture 12 in `conv_forward_kernel`.
+Modify `custom/new-forward.cu` to create GPU implementation of the forward convolution. In your template, the host code is separated in 3 parts. `conv_forward_gpu_prolog` allocates memory and copies data from host to device (Note: the device pointers given to you in this function are double pointers). `conv_forward_gpu` computes kernel dimensions and invokes kernel. `conv_forward_gpu_epilog` copies output back to host and free the device memory. You should implement your kernel code from Lecture 12 in `conv_forward_kernel`.
 
-Modify `rai_build.yml` to run with batch_size=10000 (default is 10000). Run
+Modify `rai_build.yml` to run with batch_size=10000. Run
 
     - /bin/bash -c "./m2"
 
 to use your GPU implementation.
-When it is correct, it will show the same correctness as Milestone 1. 
-The sum of OP times on batch_size=10000 should be approximately 170ms if you implement the basic kernel from Lecture 12 correctly. You must have correct accuracies and total OP time less than 340ms to earn credits on the coding part. To quicken development time, `m2.cc` takes one optional argument: the dataset size. See [Specifying Batch Size](#specifying-batch-size).
+If your implementation is correct, it will show the same correctness as Milestone 1. 
+The sum of OP times on batch_size=10000 should be approximately 170ms if you implement the basic kernel from Lecture 12 correctly. You must have correct accuracies and total OP time less than 340ms to earn full credits on the coding part. To quicken development time, `m2.cc` takes one optional argument: the dataset size. See [Specifying Batch Size](#specifying-batch-size).
 
 ### Use Nsight-Systems and Nsight-Compute for initial Performance Results
 
@@ -329,7 +329,9 @@ The code in `m1.cc`, `m2.cc`, `m3.cc` and `final.cc` are the top level files tha
 
 Within `custom/new-forward.cu`, you can use the predefined error handling code to catch CUDA errors or, you can define a macro/function similar to `wbCheck` used in WebGPU.
 
-To catch memory errors, prepend your command with `cuda-memcheck`
+To catch memory errors, prepend your command with `cuda-memcheck`. 
+Assume we want to check memory errors on Milestone3 binary, 
+in your `rai_build.yml`, run 
 
     - /bin/bash -c "cuda-memcheck ./m3"
 
